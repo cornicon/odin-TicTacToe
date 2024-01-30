@@ -5,11 +5,11 @@
 }
 
 /* this selector selects all divs inside of the .flex-container */
-.flex-container div
+.flex-container > div
 {
     background: peachpuff;
     border: 4px solid brown;
-    height: 25vh;
+    height: 75vh;
     flex: 1 1 auto;
 }
 
@@ -27,4 +27,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#gameboard-message
+{
+    text-align: center;
 }

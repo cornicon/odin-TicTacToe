@@ -135,11 +135,15 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
 
     printNewRound = () => {
         board.printBoard();
-        console.log(`${getActivePlayer.name}'s turn.`);
+        console.log(`${activePlayer.name}'s turn.`);
+        // renderGameBoard(`${activePlayer.name}'s turn.`);
         renderGameBoard();
     };
 
     const renderGameBoard = () => {
+        // let gameboardMessage = document.getElementById("gameboard-message");
+        // gameboardMessage.textContent = message;
+
         const boardWithCellValues = board.getBoard().map((row) => row.map((cell) => cell.getValue()));
         for(let i = 0; i < 3; i++)
         {
