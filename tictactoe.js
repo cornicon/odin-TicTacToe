@@ -1,3 +1,9 @@
+// -------------------------------------------------------------------------------------------------
+// JavaScript: tictactoe.js
+// Author: Cornicon
+// Purpose: TicTacToe lesson from the Odin Project
+// -------------------------------------------------------------------------------------------------
+
 function GameBoard()
 {
     // act as private fields inside of the object
