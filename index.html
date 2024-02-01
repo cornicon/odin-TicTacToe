@@ -16,9 +16,27 @@
     </div>
 
     <div class="gameboard-input-output">
+        <div>
+            <form id="player1Form">
+                <label for="player1Name">Player 1 Name:</label>
+                <input type="text" id="player1Name" name="player1Name" placeholder="Player 1">
+
+                <label for="player1Token">Player 1 Token:</label>
+                <input type="text" id="player1Token" name="player1Token" placeholder="X">
+            </form>
+
+            <form id="player2Form">
+                <label for="player2Name">Player 2 Name:</label>
+                <input type="text" id="player2Name" name="player2Name" placeholder="Player 2">
+
+                <label for="player2Token">Player 2 Token:</label>
+                <input type="text" id="player2Token" name="player2Token" placeholder="O">
+            </form>
+        </div>
+        
         <h2 id="gameboard-message">Click any square to play some TicTacToe</h2>
         <button id="newgame-button" onclick="game.NewGame()">New Game</button>
     </div>
-    
+
 </body>
 </html>
