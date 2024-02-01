@@ -33,6 +33,8 @@ function GameBoard(consoleLogging)
     const  getBoard = () => board;
 
     const playSquare = (row, column, player) => {
+        if(gameover)
+            return false;
         if(board[row][column].getValue() === 'open')
         {
             board[row][column].addToken(player);
@@ -196,11 +198,12 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     const playRound = (row, column) => {
         // Play active players token in the row, column
         let activePlayer = getActivePlayer();
-        if(consoleLogging)
-            console.log(`${activePlayer.name} played ${activePlayer.token} on ${row},${column}`);
 
         if(board.playSquare(row, column, activePlayer.token))
         {
+            if(consoleLogging)
+            console.log(`${activePlayer.name} played ${activePlayer.token} on ${row},${column}`);
+
             // Check if there is a winner
             if(board.checkWinner(activePlayer))
             {
@@ -245,7 +248,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     initializeGameBoardHTML();
     renderGameBoard();
 
-    return { playRound, getActivePlayer, renderGameBoard, NewGame };
+    return { playRound, NewGame };
 }
 
 const game = GameController();
