@@ -95,20 +95,12 @@ function GameBoard(consoleLogging)
             }
         }
         gameover = false;
-        if(consoleLogging)
-        {
-            printBoard();
-            console.log(`The board has been reset successfully. Player 1, please select your move.`);
-        }
+        return true;
     }
 
-    const printBoard = () => {
-        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
-        if(consoleLogging)
-            console.log(boardWithCellValues);
-    }
+    
 
-    return { getBoard, playSquare, printBoard, checkWinner, checkTie, resetBoard, Gameover };
+    return { getBoard, playSquare, checkWinner, checkTie, resetBoard, Gameover };
 }
 
 function Cell() {
@@ -127,6 +119,12 @@ function Cell() {
 
 function GameController(playerOneName = "Player One", playerTwoName = "Player Two", consoleLogging = true) {
     const board = new GameBoard(consoleLogging);//Object.create(GameBoard);
+    const gameBoardMessage = document.getElementById("gameboard-message");
+
+    const printBoard = () => {
+        const boardWithCellValues = board.getBoard().map((row) => row.map((cell) => cell.getValue()))
+        console.log(boardWithCellValues);
+    }
 
     const players = [
         {
@@ -148,9 +146,12 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     const getActivePlayer = () => activePlayer;
 
     printNewRound = () => {
-        board.printBoard();
+        
         if(consoleLogging)
+        {
+            printBoard();
             console.log(`${activePlayer.name}'s turn.`);
+        }   
         // renderGameBoard(`${activePlayer.name}'s turn.`);
         renderGameBoard();
     };
@@ -239,9 +240,17 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     };
 
     const NewGame = () => {
-        board.resetBoard();
-        renderGameBoard();
-        //printNewRound();
+        if(board.resetBoard())
+        {
+            if(consoleLogging)
+            {
+                printBoard();
+                console.log(`The board has been reset successfully. Player 1, please select your move.`);
+            }
+            renderGameBoard();
+        }
+        else
+            alert("Problem while resetting board");
     }
 
     // Initial Play Game Message
