@@ -4,7 +4,7 @@
 // Purpose: TicTacToe lesson from the Odin Project
 // -------------------------------------------------------------------------------------------------
 
-function GameBoard()
+function GameBoard(consoleLogging)
 {
     // act as private fields inside of the object
     const rows = 3;
@@ -91,13 +91,17 @@ function GameBoard()
             }
         }
         gameover = false;
-        printBoard();
-        console.log(`The board has been reset successfully. Player 1, please select your move.`);
+        if(consoleLogging)
+        {
+            printBoard();
+            console.log(`The board has been reset successfully. Player 1, please select your move.`);
+        }
     }
 
     const printBoard = () => {
         const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
-        console.log(boardWithCellValues);
+        if(consoleLogging)
+            console.log(boardWithCellValues);
     }
 
     return { getBoard, playSquare, printBoard, checkWinner, checkTie, resetBoard };
@@ -117,8 +121,8 @@ function Cell() {
     return { addToken, getValue };
 }
 
-function GameController(playerOneName = "Player One", playerTwoName = "Player Two") {
-    const board = new GameBoard();//Object.create(GameBoard);
+function GameController(playerOneName = "Player One", playerTwoName = "Player Two", consoleLogging = false) {
+    const board = new GameBoard(consoleLogging);//Object.create(GameBoard);
 
     const players = [
         {
@@ -141,7 +145,8 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
 
     printNewRound = () => {
         board.printBoard();
-        console.log(`${activePlayer.name}'s turn.`);
+        if(consoleLogging)
+            console.log(`${activePlayer.name}'s turn.`);
         // renderGameBoard(`${activePlayer.name}'s turn.`);
         renderGameBoard();
     };
@@ -189,14 +194,16 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     const playRound = (row, column) => {
         // Play active players token in the row, column
         let activePlayer = getActivePlayer();
-        console.log(`${activePlayer.name} played ${activePlayer.token} on ${row},${column}`);
+        if(consoleLogging)
+            console.log(`${activePlayer.name} played ${activePlayer.token} on ${row},${column}`);
 
         if(board.playSquare(row, column, activePlayer.token))
         {
             // Check if there is a winner
             if(board.checkWinner(activePlayer))
             {
-                console.log(`${activePlayer.name} is the winner!`);
+                if(consoleLogging)
+                    console.log(`${activePlayer.name} is the winner!`);
                 // get new gameboard to start new game
                 board.resetBoard();
                 renderGameBoard();
@@ -204,7 +211,8 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
             }
             else if(board.checkTie())
             {
-                console.log("It's a tie");
+                if(consoleLogging)
+                    console.log("It's a tie");
                 board.resetBoard();
                 renderGameBoard();
                 return;
@@ -215,7 +223,8 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
             printNewRound();
         }
         else
-            console.log("That square was already taken. Please try again.");
+            if(consoleLogging)
+                console.log("That square was already taken. Please try again.");
     };
 
     // Initial Play Game Message
