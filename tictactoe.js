@@ -12,6 +12,8 @@ function GameBoard(consoleLogging)
     const board = [];
     let gameover = false;
 
+    const Gameover = () => gameover;
+
     // Create a 2D array that will represent the state of the gameboard
     // Row 0 will represent the top row
     // Column 0 will represent the left-most column
@@ -104,7 +106,7 @@ function GameBoard(consoleLogging)
             console.log(boardWithCellValues);
     }
 
-    return { getBoard, playSquare, printBoard, checkWinner, checkTie, resetBoard };
+    return { getBoard, playSquare, printBoard, checkWinner, checkTie, resetBoard, Gameover };
 }
 
 function Cell() {
@@ -121,7 +123,7 @@ function Cell() {
     return { addToken, getValue };
 }
 
-function GameController(playerOneName = "Player One", playerTwoName = "Player Two", consoleLogging = false) {
+function GameController(playerOneName = "Player One", playerTwoName = "Player Two", consoleLogging = true) {
     const board = new GameBoard(consoleLogging);//Object.create(GameBoard);
 
     const players = [
@@ -203,18 +205,21 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
             if(board.checkWinner(activePlayer))
             {
                 if(consoleLogging)
+                {
                     console.log(`${activePlayer.name} is the winner!`);
-                // get new gameboard to start new game
-                board.resetBoard();
-                renderGameBoard();
+                    console.log("If you would like to play again type game.newGame() into the console.");
+                    renderGameBoard();
+                }
                 return;
             }
             else if(board.checkTie())
             {
                 if(consoleLogging)
+                {
                     console.log("It's a tie");
-                board.resetBoard();
-                renderGameBoard();
+                    console.log("If you would like to play again type game.newGame() into the console.");
+                    renderGameBoard();
+                }
                 return;
             }
 
@@ -224,15 +229,26 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         }
         else
             if(consoleLogging)
-                console.log("That square was already taken. Please try again.");
+                if(board.Gameover())
+                    console.log("The game is over. Please start a new game");
+                else
+                    console.log("That square was already taken. Please try again.");
     };
+
+    const newGame = () => {
+        board.resetBoard();
+        renderGameBoard();
+        //printNewRound();
+    }
 
     // Initial Play Game Message
     initializeGameBoardHTML();
-    renderGameBoard();
-    printNewRound();
+    
+    // Set up new game click event
+    const newGameButton = document.getElementById("newgame-button");
+    newGameButton.onclick = newGame();
 
-    return { playRound, getActivePlayer, renderGameBoard };
+    return { playRound, getActivePlayer, renderGameBoard, newGame };
 }
 
 const game = GameController();
