@@ -207,7 +207,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
                 if(consoleLogging)
                 {
                     console.log(`${activePlayer.name} is the winner!`);
-                    console.log("If you would like to play again type game.newGame() into the console.");
+                    console.log("If you would like to play again type game.NewGame() into the console.");
                     renderGameBoard();
                 }
                 return;
@@ -217,7 +217,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
                 if(consoleLogging)
                 {
                     console.log("It's a tie");
-                    console.log("If you would like to play again type game.newGame() into the console.");
+                    console.log("If you would like to play again type game.NewGame() into the console.");
                     renderGameBoard();
                 }
                 return;
@@ -235,7 +235,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
                     console.log("That square was already taken. Please try again.");
     };
 
-    const newGame = () => {
+    const NewGame = () => {
         board.resetBoard();
         renderGameBoard();
         //printNewRound();
@@ -243,12 +243,12 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
 
     // Initial Play Game Message
     initializeGameBoardHTML();
-    
+
     // Set up new game click event
     const newGameButton = document.getElementById("newgame-button");
-    newGameButton.onclick = newGame();
+    newGameButton.addEventListener("click", NewGame())
 
-    return { playRound, getActivePlayer, renderGameBoard, newGame };
+    return { playRound, getActivePlayer, renderGameBoard, NewGame };
 }
 
 const game = GameController();
