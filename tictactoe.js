@@ -121,6 +121,8 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     const board = new GameBoard(consoleLogging);//Object.create(GameBoard);
     const gameBoardMessage = document.getElementById("gameboard-message");
 
+    const updateGameBoardMessage = (message) => gameBoardMessage.innerText = message;
+
     const printBoard = () => {
         const boardWithCellValues = board.getBoard().map((row) => row.map((cell) => cell.getValue()))
         console.log(boardWithCellValues);
@@ -150,9 +152,9 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         if(consoleLogging)
         {
             printBoard();
-            console.log(`${activePlayer.name}'s turn.`);
+            console.log(`${activePlayer.name}'s (${activePlayer.token}) turn.`);
         }   
-        // renderGameBoard(`${activePlayer.name}'s turn.`);
+        updateGameBoardMessage(`${activePlayer.name}'s (${activePlayer.token}) turn.`);
         renderGameBoard();
     };
 
@@ -212,18 +214,20 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
                 {
                     console.log(`${activePlayer.name} is the winner!`);
                     console.log("If you would like to play again type game.NewGame() into the console.");
-                    renderGameBoard();
                 }
+                updateGameBoardMessage(`${activePlayer.name} is the winner! ` + 
+                "If you would like to play again please click the New Game button.")
+                renderGameBoard();
                 return;
             }
             else if(board.checkTie())
             {
                 if(consoleLogging)
                 {
-                    console.log("It's a tie");
-                    console.log("If you would like to play again type game.NewGame() into the console.");
-                    renderGameBoard();
+                    console.log("It's a tie. If you would like to play again type game.NewGame() into the console.");
                 }
+                updateGameBoardMessage("It's a tie. If you would like to play again please click the New Game button.")
+                renderGameBoard();
                 return;
             }
 
