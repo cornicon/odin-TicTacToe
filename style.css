@@ -29,7 +29,21 @@
     align-items: center;
 }
 
-#gameboard-message
+.gameboard-input-output
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* #gameboard-message
 {
     text-align: center;
+} */
+
+#newgame-button
+{
+    padding: 2em 5em;
+    margin: 2em;
 }

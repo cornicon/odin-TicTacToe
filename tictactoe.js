@@ -243,10 +243,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
 
     // Initial Play Game Message
     initializeGameBoardHTML();
-
-    // Set up new game click event
-    const newGameButton = document.getElementById("newgame-button");
-    newGameButton.addEventListener("click", NewGame())
+    renderGameBoard();
 
     return { playRound, getActivePlayer, renderGameBoard, NewGame };
 }
